@@ -27,7 +27,9 @@ app.post('/webhook', function (req, res) {
     for (i = 0; i < events.length; i++) {
         var event = events[i];
         if (event.message && event.message.text) {
-            sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
+            if (!sendGenericMessage(event.sender.id, event.message.text)) {
+                sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
+
         }
     }
     res.sendStatus(200);
@@ -49,4 +51,182 @@ function sendMessage(recipientId, message) {
             console.log('Error: ', response.body.error);
         }
     });
+};
+
+function sendGenericMessage(sender, text) {
+    //Generic template
+    if (text === 'shop'){
+        message = {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "generic",
+                    "elements": [{
+                        "title": "First card",
+                        "subtitle": "Element #1 of an hscroll",
+                        "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://www.messenger.com",
+                            "title": "web url"
+                        }, {
+                            "type": "postback",
+                            "title": "Postback",
+                            "payload": "Payload for first element in a generic bubble",
+                        }],
+                    }, {
+                        "title": "Second card",
+                        "subtitle": "Element #2 of an hscroll",
+                        "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                        "buttons": [{
+                            "type": "postback",
+                            "title": "Postback",
+                            "payload": "Payload for second element in a generic bubble",
+                        }],
+                    }]
+                }
+            }
+        };
+        sendMessage(sender, message);
+        return true;
+    }
+    //Button template
+    else if(text ==='menu'){
+        message = {
+            "attachment":{
+                "type":"template",
+                "payload":{
+                    "template_type":"button",
+                    "text":"What do you want to do next?",
+                    "buttons":[
+                        {
+                            "type":"web_url",
+                            "url":"https://hanxstandard.com",
+                            "title":"Show Website"
+                        },
+                        {
+                            "type":"postback",
+                            "title":"Start Chatting",
+                            "payload":"USER_DEFINED_PAYLOAD"
+                        }
+                    ]
+                }
+            }
+        };
+        sendMessage(sender, message);
+        return true
+    }
+    else if (text ==='list'){
+        message = {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "list",
+                    "elements": [
+                        {
+                            "title": "Classic T-Shirt Collection",
+                            "image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
+                            "subtitle": "See all our colors",
+                            "default_action": {
+                                "type": "web_url",
+                                "url": "https://peterssendreceiveapp.ngrok.io/shop_collection",
+                                "messenger_extensions": true,
+                                "webview_height_ratio": "tall",
+                                "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                            },
+                            "buttons": [
+                                {
+                                    "title": "View",
+                                    "type": "web_url",
+                                    "url": "https://peterssendreceiveapp.ngrok.io/collection",
+                                    "messenger_extensions": true,
+                                    "webview_height_ratio": "tall",
+                                    "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Classic White T-Shirt",
+                            "image_url": "https://peterssendreceiveapp.ngrok.io/img/white-t-shirt.png",
+                            "subtitle": "100% Cotton, 200% Comfortable",
+                            "default_action": {
+                                "type": "web_url",
+                                "url": "https://peterssendreceiveapp.ngrok.io/view?item=100",
+                                "messenger_extensions": true,
+                                "webview_height_ratio": "tall",
+                                "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                            },
+                            "buttons": [
+                                {
+                                    "title": "Shop Now",
+                                    "type": "web_url",
+                                    "url": "https://peterssendreceiveapp.ngrok.io/shop?item=100",
+                                    "messenger_extensions": true,
+                                    "webview_height_ratio": "tall",
+                                    "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Classic Blue T-Shirt",
+                            "image_url": "https://peterssendreceiveapp.ngrok.io/img/blue-t-shirt.png",
+                            "subtitle": "100% Cotton, 200% Comfortable",
+                            "default_action": {
+                                "type": "web_url",
+                                "url": "https://peterssendreceiveapp.ngrok.io/view?item=101",
+                                "messenger_extensions": true,
+                                "webview_height_ratio": "tall",
+                                "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                            },
+                            "buttons": [
+                                {
+                                    "title": "Shop Now",
+                                    "type": "web_url",
+                                    "url": "https://peterssendreceiveapp.ngrok.io/shop?item=101",
+                                    "messenger_extensions": true,
+                                    "webview_height_ratio": "tall",
+                                    "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Classic Black T-Shirt",
+                            "image_url": "https://peterssendreceiveapp.ngrok.io/img/black-t-shirt.png",
+                            "subtitle": "100% Cotton, 200% Comfortable",
+                            "default_action": {
+                                "type": "web_url",
+                                "url": "https://peterssendreceiveapp.ngrok.io/view?item=102",
+                                "messenger_extensions": true,
+                                "webview_height_ratio": "tall",
+                                "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                            },
+                            "buttons": [
+                                {
+                                    "title": "Shop Now",
+                                    "type": "web_url",
+                                    "url": "https://peterssendreceiveapp.ngrok.io/shop?item=102",
+                                    "messenger_extensions": true,
+                                    "webview_height_ratio": "tall",
+                                    "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                                }
+                            ]
+                        }
+                    ],
+                    "buttons": [
+                        {
+                            "title": "View More",
+                            "type": "postback",
+                            "payload": "payload"
+                        }
+                    ]
+                }
+            }
+        };
+        sendMessage(sender, message);
+        return true
+    }
+    else{
+        return false
+    }
+
 };
