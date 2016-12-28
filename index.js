@@ -28,11 +28,12 @@ app.post('/webhook', function (req, res) {
         var event = events[i];
         if (event.message && event.message.text) {
             if (!sendGenericMessage(event.sender.id, event.message.text)) {
-                sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
+                sendMessage(event.sender.id, {text: "Echo: " + event.message.text})
 
+            }
         }
+        res.sendStatus(200);
     }
-    res.sendStatus(200);
 });
 
 function sendMessage(recipientId, message) {
@@ -55,7 +56,7 @@ function sendMessage(recipientId, message) {
 
 function sendGenericMessage(sender, text) {
     //Generic template
-    if (text === 'shop'){
+    if (text === 'Shop'){
         message = {
             "attachment": {
                 "type": "template",
@@ -91,7 +92,7 @@ function sendGenericMessage(sender, text) {
         return true;
     }
     //Button template
-    else if(text ==='menu'){
+    else if(text ==='Menu'){
         message = {
             "attachment":{
                 "type":"template",
@@ -116,7 +117,7 @@ function sendGenericMessage(sender, text) {
         sendMessage(sender, message);
         return true
     }
-    else if (text ==='list'){
+    else if (text ==='List'){
         message = {
             "attachment": {
                 "type": "template",
