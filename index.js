@@ -28,7 +28,7 @@ app.post('/webhook', function (req, res) {
         var event = events[i];
         if (event.message && event.message.text) {
             if (event.message && event.message.text) {
-                if (!kittenMessage(event.sender.id, event.message.text)) {
+                if (!shop(event.sender.id, event.message.text)) {
                     sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
                 }
             }
@@ -93,6 +93,51 @@ function kittenMessage(recipientId, text) {
 
             return true;
         }
+    }
+
+    return false;
+
+};
+
+function shop(recipientId, text) {
+
+
+    if (text === 'Shop') {
+
+        message = {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "generic",
+                    "elements": [{
+                        "title": "First card",
+                        "subtitle": "Element #1 of an hscroll",
+                        "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://www.messenger.com",
+                            "title": "web url"
+                        }, {
+                            "type": "postback",
+                            "title": "Postback",
+                            "payload": "Payload for first element in a generic bubble",
+                        }],
+                    }, {
+                        "title": "Second card",
+                        "subtitle": "Element #2 of an hscroll",
+                        "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                        "buttons": [{
+                            "type": "postback",
+                            "title": "Postback",
+                            "payload": "Payload for second element in a generic bubble",
+                        }],
+                    }]
+                }
+            }
+        };
+        sendMessage(recipientId, message);
+        return true;
+
     }
 
     return false;
