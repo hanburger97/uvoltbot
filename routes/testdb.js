@@ -15,7 +15,7 @@ router.get('/testdb/:trigger', function (req, res) {
         return res.end(result.response);
 
     })*/
-    getResponseModule.getResponse(req.params.trigger);
+    //getResponseModule.getResponse(req.params.trigger);
 
     //res.end(getResponseModule.getResponse(req.params.trigger, next));
     //getResponseModule.getResponse(req,res,next)
