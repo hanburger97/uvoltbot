@@ -18,7 +18,7 @@ router.post('/webhook', function (req, res) {
         if (event.message && event.message.text) {
             if (event.message && event.message.text) {
 
-                event.message = event.message.toLowerCase();
+                event.message.text = event.message.text.toLowerCase();
                 /*
                 Response.findOne({
                     trigger: event.message
