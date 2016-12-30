@@ -19,7 +19,7 @@ router.post('/webhook', function (req, res) {
             if (event.message && event.message.text) {
 
                 event.message.text = event.message.text.toLowerCase();
-                /*
+
                 Response.findOne({
                     trigger: event.message
                 }).exec(function (err, data){
@@ -33,9 +33,9 @@ router.post('/webhook', function (req, res) {
 
 
                 });
-                */
 
-                logic.sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
+
+                //logic.sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
 
             }
         }
