@@ -39,6 +39,9 @@ function getUserInfo(id){
     });
     console.log(usr);
     return usr;
+    /*Still need to work on it, variable body from inner scope is defined json but unable
+    * to parse it to outer scope
+    **/
 
 };
 module.exports.sendMessage  = sendMessage;

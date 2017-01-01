@@ -17,10 +17,11 @@ router.post('/webhook', function (req, res) {
     for (i = 0; i < events.length; i++) {
         var event = events[i];
         if (event.message && event.message.text) {
-
+            words = event.message.text.split();
+            console.log(words);
 
             event.message.text = event.message.text.toLowerCase();
-            var currentUser = logic.getUserInfo(event.sender.id);
+            //var currentUser = logic.getUserInfo(event.sender.id);
             console.log(currentUser);
             Response.findOne({
                 trigger: event.message.text
