@@ -21,7 +21,7 @@ router.post('/webhook', function (req, res) {
                 event.message.text = event.message.text.toLowerCase();
 
                 Response.findOne({
-                    trigger: event.message
+                    trigger: event.message.text
                 }).exec(function (err, data){
                     if (err){
                         console.log(err);
