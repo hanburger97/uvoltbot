@@ -19,9 +19,12 @@ router.post('/webhook', function (req, res) {
         if (event.message && event.message.text) {
             event.message.text = event.message.text.toLowerCase();
             var words = event.message.text.split(' ');
-            console.log(words);
+            //console.log(words);
+            for(i =0, i<words.length, i++){
+                console.log(words[i]);
+            }
 
-
+            /*
             //var currentUser = logic.getUserInfo(event.sender.id);
             //console.log(currentUser);
             Response.findOne({
@@ -57,7 +60,7 @@ router.post('/webhook', function (req, res) {
 
                 //logic.sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
 
-
+            */
 
 
 
