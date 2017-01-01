@@ -16,28 +16,30 @@ router.post('/webhook', function (req, res) {
     for (i = 0; i < events.length; i++) {
         var event = events[i];
         if (event.message && event.message.text) {
-            if (event.message && event.message.text) {
-
-                event.message.text = event.message.text.toLowerCase();
-
-                Response.findOne({
-                    trigger: event.message.text
-                }).exec(function (err, data){
-                    if (err){
-                        console.log(err);
-                    } else if (!data) {
-                        logic.sendMessage(event.sender.id, {text: "Sorry I am not programmed to understand this yet"});
-                    } else {
-                        logic.sendMessage(event.sender.id, {text: data.response})
-                    }
 
 
-                });
+            event.message.text = event.message.text.toLowerCase();
+
+            Response.findOne({
+                trigger: event.message.text
+            }).exec(function (err, data){
+                if (err){
+                    console.log(err);
+                } else if (!data) {
+                    logic.sendMessage(event.sender.id, {text: "Sorry I am not programmed to understand this yet"});
+                } else {
+                    logic.sendMessage(event.sender.id, {text: data.response})
+                }
+
+
+            });
 
 
                 //logic.sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
 
-            }
+
+
+
 
         }
     }
