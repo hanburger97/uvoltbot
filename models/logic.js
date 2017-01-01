@@ -30,7 +30,7 @@ function getUserInfo(id){
             }
             else if (!err && res.statusCode == 200){
                 console.log(body);
-                return body;
+
             }
     });
 };
