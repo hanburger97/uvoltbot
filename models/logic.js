@@ -19,8 +19,7 @@ function sendMessage(recipientId, message) {
     });
 };
 function getUserInfo(id){
-    var usr={};
-    request({
+    var usr= request({
         url: 'https://graph.facebook.com/v2.6/' + id + '?fields=first_name,last_name,profile_pic,locale,timezone,gender',
         qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
         method: 'GET'
@@ -30,11 +29,14 @@ function getUserInfo(id){
                 console.log(err)
             }
             else if (!err && res.statusCode == 200){
-                console.log(body);
-                usr =+ body;
+                //console.log(body);
+                usr = body;
+                console.log(usr);
+                return usr;
 
             }
     });
+    console.log('a' + JSON.stringify(usr))
     return usr;
 
 };
