@@ -18,7 +18,7 @@ router.post('/webhook', function (req, res) {
         var event = events[i];
         if (event.message && event.message.text) {
             event.message.text = event.message.text.toLowerCase();
-            var words = event.message.text.split();
+            var words = event.message.text.split(' ');
             console.log(words);
 
 
