@@ -21,6 +21,7 @@ router.post('/webhook', function (req, res) {
 
             event.message.text = event.message.text.toLowerCase();
             var currentUser = logic.getUserInfo(event.sender.id);
+            console.log(currentUser);
             Response.findOne({
                 trigger: event.message.text
             }).exec(function (err, data){
@@ -28,7 +29,8 @@ router.post('/webhook', function (req, res) {
                     console.log(err);
                 } else if (!data) {
                     logic.sendMessage(event.sender.id, {
-                        text: "Sorry " + currentUser.first_name + ", I am not programmed to understand this yet",
+                        text: "Sorry, I am not programmed to understand this yet",
+                        //text: "Sorry " + currentUser.first_name + ", I am not programmed to understand this yet",
                         quick_replies: [
                             {
                                 content_type: "text",
