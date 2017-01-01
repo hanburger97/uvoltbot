@@ -18,4 +18,21 @@ function sendMessage(recipientId, message) {
         }
     });
 };
+function getUserInfo(id){
+    request({
+        url: 'https://graph.facebook.com/v2.6/' + id + '?fields=first_name,last_name,profile_pic,locale,timezone,gender',
+        qs: {access_token: process.env.PAGE_ACCESS_TOKEN},
+        method: 'GET'
+
+    }, function (err, res, body) {
+            if (err){
+                console.log(err)
+            }
+            else if (!err && res.statusCode == 200){
+                console.log(body);
+                return body;
+            }
+    });
+};
 module.exports.sendMessage  = sendMessage;
+module.exports.getUserInfo = getUserInfo;
