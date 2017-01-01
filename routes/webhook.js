@@ -23,7 +23,7 @@ router.post('/webhook', function (req, res) {
 
 
             //var currentUser = logic.getUserInfo(event.sender.id);
-            console.log(currentUser);
+            //console.log(currentUser);
             Response.findOne({
                 trigger: event.message.text
             }).exec(function (err, data){
