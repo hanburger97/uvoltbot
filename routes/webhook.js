@@ -27,11 +27,18 @@ router.post('/webhook', function (req, res) {
                 if (err){
                     console.log(err);
                 } else if (!data) {
-                    logic.sendMessage(event.sender.id, {text: "Sorry I am not programmed to understand this yet"});
+                    logic.sendMessage(event.sender.id, {
+                        text: "Sorry I am not programmed to understand this yet", quick_replies: {
+                        content_type: "text",
+                        title: "Ok",
+                        payload: "start"
+                    }
+                    });
                 } else {
                     logic.sendMessage(event.sender.id, {text: data.response})
                 }
-
+                // TO DO : re-populate db so that sendMessage(id, JSON.parse(data.response)) in order to i
+                // integrate generic messages in JSON
 
             });
 
