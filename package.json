@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "populate": "node ./bin/populateDb"
+    "populate": "node ./bin/populateDb",
+    "addStartBtn" : "node ./bin/getStarted"
   },
   "author": "",
   "license": "ISC",

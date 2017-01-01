@@ -3,6 +3,7 @@ var router = express.Router();
 var logic = require('../models/logic');
 var mongoose = require('mongoose');
 var Response = mongoose.model('Response');
+var Postback = mongoose.model('Postback');
 
 router.get('/webhook', function (req, res) {
     if (req.query['hub.verify_token'] === 'testbot_verify_token') {
@@ -41,6 +42,19 @@ router.post('/webhook', function (req, res) {
 
 
 
+        } else if (event.postback){
+
+            Postback.findOne({
+                received: event.postback.payload
+            }).exec(function (err, data) {
+                if (err){
+                    console.log(err)
+                }else if (!data){
+                    logic.sendMessage(event.sender.id, {text:"Sorry I am not programmed to handle this button yet"});
+                }else{
+                    logic.sendMessage(event.sender.id, {text: data.response});
+                }
+            });
         }
     }
     res.sendStatus(200);

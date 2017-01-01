@@ -2,6 +2,7 @@ var async = require('async');
 var mongoose = require('mongoose');
 require(process.cwd() +'/lib/connection');
 var Response = mongoose.model('Response');
+var Postback = mongoose.model('Postback');
 var data = {
     responses: [
         {
@@ -20,6 +21,14 @@ var data = {
             response: 'r2'
         },
 
+    ],
+    postbacks : [
+        {
+            id: 'a',
+            received: 'start',
+            response: 'Hello there, blbalbalbla'
+
+        }
     ]
 };
 var deleteResponse = function (callback){
@@ -27,7 +36,7 @@ var deleteResponse = function (callback){
     Response.remove({}, function(error, response){
         if (error){
             console.log('There was an error deleting previous responses ; '+ error);
-        };
+        }
         console.log('Done');
         callback();
     });
@@ -42,9 +51,34 @@ var addResponses = function(callback) {
         callback();
     });
 };
+
+var deletePostback = function (callbak) {
+    console.info('Deleting previous set postbacks');
+    Postback.remove({}, function (error) {
+        if(error){
+            console.log('there was an error: '+ error);
+        }
+        console.log('Done');
+        callbak();
+    });
+
+};
+
+var addPostback = function(callback) {
+    console.info('Adding Postback');
+    Postback.create(data.postbacks, function(error) {
+        if (error) {
+            console.log(error)
+        }
+        console.log('Done');
+        callback();
+    });
+};
 async.series([
     deleteResponse,
-    addResponses
+    addResponses,
+    deletePostback,
+    addPostback
 ], function(error, results) {
     if (error) {
         console.error('Error: ' + error);
