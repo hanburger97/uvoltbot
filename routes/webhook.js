@@ -29,11 +29,11 @@ router.post('/webhook', function (req, res) {
                 } else if (!data) {
                     logic.sendMessage(event.sender.id, {
                         text: "Sorry I am not programmed to understand this yet",
-                        quick_replies: {
+                        quick_replies: [{
                             content_type: "text",
                             title: "Ok",
                             payload: "undefined"
-                        }
+                        }]
                     });
                 } else {
                     logic.sendMessage(event.sender.id, {text: data.response})
