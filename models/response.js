@@ -11,7 +11,7 @@ var ResponseSchema = new Schema({
         required: true,
     },
     response : {
-        type: String,
+        type: Object,
         required: true,
 
     }

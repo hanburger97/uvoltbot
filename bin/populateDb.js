@@ -8,17 +8,23 @@ var data = {
         {
             id: '1',
             trigger: 'hello',
-            response: 'hello'
+            response: {
+                text: 'Hello'
+            }
         },
         {
-            id: '1',
+            id: '2',
             trigger: 't1',
-            response: 'r1'
+            response: {
+                text: 'r1'
+            }
         },
         {
-            id: '1',
+            id: '3',
             trigger: 't2',
-            response: 'r2'
+            response: {
+                text: 'r2'
+            }
         },
 
     ],
@@ -26,7 +32,9 @@ var data = {
         {
             id: 'a',
             received: 'start',
-            response: 'Hello there, blbalbalbla'
+            response: {
+                text:'Hello there, blbalbalbla'
+            }
 
         }
     ]

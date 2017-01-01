@@ -36,7 +36,7 @@ router.post('/webhook', function (req, res) {
                         }]
                     });
                 } else {
-                    logic.sendMessage(event.sender.id, {text: data.response})
+                    logic.sendMessage(event.sender.id, data.response)
                 }
                 // TO DO : re-populate db so that sendMessage(id, JSON.parse(data.response)) in order to i
                 // integrate generic messages in JSON
@@ -60,7 +60,7 @@ router.post('/webhook', function (req, res) {
                 }else if (!data){
                     logic.sendMessage(event.sender.id, {text:"Sorry I am not programmed to handle this button yet"});
                 }else{
-                    logic.sendMessage(event.sender.id, {text: data.response});
+                    logic.sendMessage(event.sender.id, data.response);
                 }
             });
         }

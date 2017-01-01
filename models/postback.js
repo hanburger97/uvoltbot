@@ -12,7 +12,7 @@ var PostbackSchema = new Schema({
 
     },
     response: {
-        type: String,
+        type: Object,
         required: true
     }
 });
