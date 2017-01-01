@@ -38,6 +38,7 @@ router.post('/webhook', function (req, res) {
                 //logic.sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
 
             }
+
         }
     }
     res.sendStatus(200);
