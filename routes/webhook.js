@@ -21,6 +21,7 @@ router.post('/webhook', function (req, res) {
 
             event.message.text = event.message.text.toLowerCase();
             var words = event.message.text.split(' ');
+            var words2 = event.message.text.split(' ');
             //console.log(words);
 
             var f1 = function(callback) {
@@ -37,10 +38,10 @@ router.post('/webhook', function (req, res) {
                         else if (!data) {
                             console.log('No data');
                             r.push('a');
-                            if(r.length == event.message.text.split(' ').length){
+                            console.log("r is " + r);
+                            console.log('words2 is ' + words2);
+                            if(r.length == words2.length){
                                 console.log("NO REPLY");
-                                console.log("r is " + r)
-                                console.log('words is ' + event.message.text.split(' '))
                             }
                         }
                         else {
