@@ -22,9 +22,10 @@ router.post('/webhook', function (req, res) {
             event.message.text = event.message.text.toLowerCase();
             var words = event.message.text.split(' ');
             //console.log(words);
+            var r = [];
             var f1 = function(callback) {
+
                 for (z = 0; z < words.length; z++) {
-                    no_reply = false;
                     var word = words[z];
                     Response.findOne({
                         trigger: word
@@ -35,20 +36,21 @@ router.post('/webhook', function (req, res) {
 
                         else if (!data) {
                             console.log('No data');
-                            no_reply = true;
+
                         }
                         else {
                             logic.sendMessage(event.sender.id, data.response);
-                            no_reply = false;
+                            r.push(data.response);
 
                         }
                     });
                 }
-                console.log('executing f1');
+                console.log('f1 executed');
+                console.log(r);
                 callback();
             };
             var f2 = function(callback){
-                if (no_reply){
+                if (r.length < 1){
                     logic.sendMessage(event.sender.id, {
                         text: "Sorry, I am not programmed to understand this yet",
                         //text: "Sorry " + currentUser.first_name + ", I am not programmed to understand this yet",
