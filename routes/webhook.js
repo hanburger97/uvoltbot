@@ -49,8 +49,8 @@ router.post('/webhook', function (req, res) {
                         });
                     } */
                     else {
-                        logic.sendMessage(event.sender.id, data.response)
-                        no_reply = false
+                        logic.sendMessage(event.sender.id, data.response);
+                        no_reply = false;
                     }
                 });
             };
