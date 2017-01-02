@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var Response = mongoose.model('Response');
 var Postback = mongoose.model('Postback');
 var async = require('async');
-
+var r = [];
 router.get('/webhook', function (req, res) {
     if (req.query['hub.verify_token'] === 'testbot_verify_token') {
         res.send(req.query['hub.challenge']);
@@ -22,7 +22,7 @@ router.post('/webhook', function (req, res) {
             event.message.text = event.message.text.toLowerCase();
             var words = event.message.text.split(' ');
             //console.log(words);
-            r = [];
+
             var f1 = function(callback) {
 
                 for (z = 0; z < words.length; z++) {
@@ -36,11 +36,14 @@ router.post('/webhook', function (req, res) {
 
                         else if (!data) {
                             console.log('No data');
-
+                            r.push(word);
+                            if(r.length == words.length){
+                                console.log("NO REPLY");
+                            }
                         }
                         else {
                             logic.sendMessage(event.sender.id, data.response);
-                            r.push('a');
+
 
                         }
                     });
@@ -49,6 +52,7 @@ router.post('/webhook', function (req, res) {
                 console.log(r);
                 callback();
             };
+            /*
             var f1_5 = function (callback){
                 console.log(r);
                 callback();
@@ -77,11 +81,9 @@ router.post('/webhook', function (req, res) {
                 console.log('f2 executed');
                 console.log(r);
                 callback();
-            };
+            };*/
             async.series([
-                f1,
-                f1_5,
-                f2
+                f1
             ], function(error){
                 if(error){
                     console.log(error)
