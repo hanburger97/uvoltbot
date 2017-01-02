@@ -20,6 +20,7 @@ router.post('/webhook', function (req, res) {
             event.message.text = event.message.text.toLowerCase();
             var words = event.message.text.split(' ');
             //console.log(words);
+            var no_reply = true;
             for(z =0; z < words.length; z ++) {
                 var word = words[z];
                 Response.findOne({
@@ -27,7 +28,9 @@ router.post('/webhook', function (req, res) {
                 }).exec(function (err, data){
                     if (err){
                         console.log(err);
-                    } else if (!data) {
+                    }
+                    /*
+                    else if (!data) {
                         logic.sendMessage(event.sender.id, {
                             text: "Sorry, I am not programmed to understand this yet",
                             //text: "Sorry " + currentUser.first_name + ", I am not programmed to understand this yet",
@@ -44,9 +47,29 @@ router.post('/webhook', function (req, res) {
                                 }
                             ]
                         });
-                    } else {
+                    } */
+                    else {
                         logic.sendMessage(event.sender.id, data.response)
+                        no_reply = false
                     }
+                });
+            };
+            if (no_reply){
+                logic.sendMessage(event.sender.id, {
+                    text: "Sorry, I am not programmed to understand this yet",
+                    //text: "Sorry " + currentUser.first_name + ", I am not programmed to understand this yet",
+                    quick_replies: [
+                        {
+                            content_type: "text",
+                            title: "Ok",
+                            payload: "undefined"
+                        },
+                        {
+                            content_type: "text",
+                            title: 'Nevermind',
+                            payload: "start"
+                        }
+                    ]
                 });
             }
         } else if (event.postback){
