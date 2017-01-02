@@ -42,6 +42,22 @@ router.post('/webhook', function (req, res) {
                             console.log('words2 is ' + words2);
                             if(r.length == words2.length){
                                 console.log("NO REPLY");
+                                logic.sendMessage(event.sender.id, {
+                                    text: "Sorry, I am not programmed to understand this yet",
+                                    //text: "Sorry " + currentUser.first_name + ", I am not programmed to understand this yet",
+                                    quick_replies: [
+                                        {
+                                            content_type: "text",
+                                            title: "Ok",
+                                            payload: "undefined"
+                                        },
+                                        {
+                                            content_type: "text",
+                                            title: 'Nevermind',
+                                            payload: "start"
+                                        }
+                                    ]
+                                });
                             }
                         }
                         else {
@@ -63,22 +79,7 @@ router.post('/webhook', function (req, res) {
 
             var f2 = function(callback){
                 if (r.length < 1){
-                    logic.sendMessage(event.sender.id, {
-                        text: "Sorry, I am not programmed to understand this yet",
-                        //text: "Sorry " + currentUser.first_name + ", I am not programmed to understand this yet",
-                        quick_replies: [
-                            {
-                                content_type: "text",
-                                title: "Ok",
-                                payload: "undefined"
-                            },
-                            {
-                                content_type: "text",
-                                title: 'Nevermind',
-                                payload: "start"
-                            }
-                        ]
-                    });
+
 
                 }
                 console.log('f2 executed');
