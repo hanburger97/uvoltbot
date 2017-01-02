@@ -37,10 +37,10 @@ router.post('/webhook', function (req, res) {
                         else if (!data) {
                             console.log('No data');
                             r.push('a');
-                            if(r.length == words.length){
+                            if(r.length == event.message.text.split(' ').length){
                                 console.log("NO REPLY");
                                 console.log("r is " + r)
-                                console.log('words is ' + words)
+                                console.log('words is ' + event.message.text.split(' '))
                             }
                         }
                         else {
