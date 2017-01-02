@@ -40,7 +40,7 @@ router.post('/webhook', function (req, res) {
                         }
                         else {
                             logic.sendMessage(event.sender.id, data.response);
-                            r.push(data.response);
+                            r.push('a');
 
                         }
                     });
