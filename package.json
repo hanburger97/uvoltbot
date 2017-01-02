@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "populate": "node ./bin/populateDb",
-    "addStartBtn": "node ./bin/getStarted"
+    "addStartBtn": "node ./bin/getStartedBtn",
+    "setMenu" : "node ./bin/setPersistentMenu"
   },
   "author": "",
   "license": "ISC",

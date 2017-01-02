@@ -43,7 +43,7 @@ router.post('/webhook', function (req, res) {
                             if(r.length == words2.length){
                                 console.log("NO REPLY");
                                 logic.sendMessage(event.sender.id, {
-                                    text: "Sorry, I am not programmed to understand this yet",
+                                    text: "Sorry {{user_first_name}}, I am not programmed to understand this yet",
                                     //text: "Sorry " + currentUser.first_name + ", I am not programmed to understand this yet",
                                     quick_replies: [
                                         {
