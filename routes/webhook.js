@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var Response = mongoose.model('Response');
 var Postback = mongoose.model('Postback');
 var async = require('async');
-var r = [];
+
 router.get('/webhook', function (req, res) {
     if (req.query['hub.verify_token'] === 'testbot_verify_token') {
         res.send(req.query['hub.challenge']);
@@ -24,7 +24,7 @@ router.post('/webhook', function (req, res) {
             //console.log(words);
 
             var f1 = function(callback) {
-
+                var r = [];
                 for (z = 0; z < words.length; z++) {
                     var word = words[z];
                     Response.findOne({
