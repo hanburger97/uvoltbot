@@ -42,25 +42,26 @@ router.post('/webhook', function (req, res) {
                         
                     }
                 });
-                if (z+1 == words.length && no_reply){
-                    logic.sendMessage(event.sender.id, {
-                        text: "Sorry, I am not programmed to understand this yet",
-                        //text: "Sorry " + currentUser.first_name + ", I am not programmed to understand this yet",
-                        quick_replies: [
-                            {
-                                content_type: "text",
-                                title: "Ok",
-                                payload: "undefined"
-                            },
-                            {
-                                content_type: "text",
-                                title: 'Nevermind',
-                                payload: "start"
-                            }
-                        ]
-                    });
-                }
+
             };
+            if (z + 1 == words.length && no_reply){
+                logic.sendMessage(event.sender.id, {
+                    text: "Sorry, I am not programmed to understand this yet",
+                    //text: "Sorry " + currentUser.first_name + ", I am not programmed to understand this yet",
+                    quick_replies: [
+                        {
+                            content_type: "text",
+                            title: "Ok",
+                            payload: "undefined"
+                        },
+                        {
+                            content_type: "text",
+                            title: 'Nevermind',
+                            payload: "start"
+                        }
+                    ]
+                });
+            }
 
         } else if (event.postback){
 

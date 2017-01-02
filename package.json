@@ -7,12 +7,13 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "populate": "node ./bin/populateDb",
-    "addStartBtn" : "node ./bin/getStarted"
+    "addStartBtn": "node ./bin/getStarted"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "async": "^2.1.4",
+    "bluebird": "^3.4.7",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "mongoose": "^4.7.5",
