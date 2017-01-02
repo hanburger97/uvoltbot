@@ -22,7 +22,7 @@ router.post('/webhook', function (req, res) {
             event.message.text = event.message.text.toLowerCase();
             var words = event.message.text.split(' ');
             //console.log(words);
-            var r = [];
+            r = [];
             var f1 = function(callback) {
 
                 for (z = 0; z < words.length; z++) {
