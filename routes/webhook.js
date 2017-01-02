@@ -4,6 +4,7 @@ var logic = require('../models/logic');
 var mongoose = require('mongoose');
 var Response = mongoose.model('Response');
 var Postback = mongoose.model('Postback');
+var async = require('async');
 
 router.get('/webhook', function (req, res) {
     if (req.query['hub.verify_token'] === 'testbot_verify_token') {
@@ -21,7 +22,61 @@ router.post('/webhook', function (req, res) {
             event.message.text = event.message.text.toLowerCase();
             var words = event.message.text.split(' ');
             //console.log(words);
+            var f1 = function(callback) {
+                for (z = 0; z < words.length; z++) {
+                    no_reply = false;
+                    var word = words[z];
+                    Response.findOne({
+                        trigger: word
+                    }).exec(function (err, data) {
+                        if (err) {
+                            console.log(err);
+                        }
 
+                        else if (!data) {
+                            console.log('No data');
+                            no_reply = true;
+                        }
+                        else {
+                            logic.sendMessage(event.sender.id, data.response);
+                            no_reply = false;
+
+                        }
+                    });
+                }
+                callback();
+            };
+            var f2 = function(callback){
+                if (no_reply){
+                    logic.sendMessage(event.sender.id, {
+                        text: "Sorry, I am not programmed to understand this yet",
+                        //text: "Sorry " + currentUser.first_name + ", I am not programmed to understand this yet",
+                        quick_replies: [
+                            {
+                                content_type: "text",
+                                title: "Ok",
+                                payload: "undefined"
+                            },
+                            {
+                                content_type: "text",
+                                title: 'Nevermind',
+                                payload: "start"
+                            }
+                        ]
+                    });
+                    callback();
+                }
+            };
+            async.series([
+                f1,
+                f2
+            ], function(error){
+                if(error){
+                    console.log(error)
+                }
+                console.log('executed f1, f2')
+            });
+            /*
             for(z =0; z < words.length; z ++) {
                 no_reply = false;
                 var word = words[z];
@@ -61,7 +116,7 @@ router.post('/webhook', function (req, res) {
                         }
                     ]
                 });
-            }
+            }*/
 
         } else if (event.postback){
 
