@@ -20,7 +20,7 @@ router.post('/webhook', function (req, res) {
             event.message.text = event.message.text.toLowerCase();
             var words = event.message.text.split(' ');
             //console.log(words);
-            var no_reply = true;
+            no_reply = true;
             for(z =0; z < words.length; z ++) {
                 var word = words[z];
                 Response.findOne({
@@ -42,7 +42,7 @@ router.post('/webhook', function (req, res) {
                                 },
                                 {
                                     content_type: "text",
-                                    title: 'Nevermind',
+                                    title: 'Nevermind'
                                     payload: "start"
                                 }
                             ]
