@@ -74,7 +74,8 @@ router.post('/webhook', function (req, res) {
                     });
 
                 }
-                console.log('f2 executed')
+                console.log('f2 executed');
+                console.log(r);
                 callback();
             };
             async.series([
