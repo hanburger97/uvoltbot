@@ -65,10 +65,10 @@ router.post('/webhook', function (req, res) {
                             }
                         ]
                     });
-                    console.log('f2 executed')
-                    callback();
 
                 }
+                console.log('f2 executed')
+                callback();
             };
             async.series([
                 f1,
