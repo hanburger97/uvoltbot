@@ -49,6 +49,11 @@ router.post('/webhook', function (req, res) {
                 console.log(r);
                 callback();
             };
+            var f1_5 = function (callback){
+                console.log(r);
+                callback
+            };
+
             var f2 = function(callback){
                 if (r.length < 1){
                     logic.sendMessage(event.sender.id, {
@@ -74,6 +79,7 @@ router.post('/webhook', function (req, res) {
             };
             async.series([
                 f1,
+                f1_5,
                 f2
             ], function(error){
                 if(error){
