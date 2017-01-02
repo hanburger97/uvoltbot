@@ -39,6 +39,8 @@ router.post('/webhook', function (req, res) {
                             r.push(word);
                             if(r.length == words.length){
                                 console.log("NO REPLY");
+                                console.log("r is " + r)
+                                console.log('words is ' + words)
                             }
                         }
                         else {
