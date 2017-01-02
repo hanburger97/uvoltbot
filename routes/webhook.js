@@ -44,6 +44,7 @@ router.post('/webhook', function (req, res) {
                         }
                     });
                 }
+                console.log('executing f1');
                 callback();
             };
             var f2 = function(callback){
@@ -64,7 +65,9 @@ router.post('/webhook', function (req, res) {
                             }
                         ]
                     });
+                    console.log('f2 executed')
                     callback();
+
                 }
             };
             async.series([
