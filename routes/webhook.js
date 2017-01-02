@@ -29,8 +29,10 @@ router.post('/webhook', function (req, res) {
                     if (err){
                         console.log(err);
                     }
-                    /*
+
                     else if (!data) {
+                        console.log('No data')
+                        /*
                         logic.sendMessage(event.sender.id, {
                             text: "Sorry, I am not programmed to understand this yet",
                             //text: "Sorry " + currentUser.first_name + ", I am not programmed to understand this yet",
@@ -46,8 +48,8 @@ router.post('/webhook', function (req, res) {
                                     payload: "start"
                                 }
                             ]
-                        });
-                    } */
+                        });*/
+                    }
                     else {
                         logic.sendMessage(event.sender.id, data.response);
                         no_reply = false;
