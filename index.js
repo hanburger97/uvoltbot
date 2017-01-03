@@ -8,6 +8,7 @@ var testdb = require('./routes/testdb');
 var app = express();
 var webhook = require('./routes/webhook');
 var responses = require('./routes/responses');
+var postbacks = require('./routes/postbacks');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.listen((process.env.PORT || 3000));
@@ -20,3 +21,4 @@ app.get('/', function (req, res) {
 });
 app.use(webhook);
 app.use(responses);
+app.use(postbacks);
