@@ -8,7 +8,7 @@
     "start": "node index.js",
     "populate": "node ./bin/populateDb",
     "addStartBtn": "node ./bin/getStartedBtn",
-    "setMenu" : "node ./bin/setPersistentMenu"
+    "setMenu": "node ./bin/setPersistentMenu"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +19,7 @@
     "express": "^4.14.0",
     "mongoose": "^4.7.5",
     "mongoose-post-find": "0.0.2",
+    "path": "^0.12.7",
     "request": "^2.79.0"
   }
 }
