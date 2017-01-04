@@ -9,16 +9,40 @@ router.get('/responses', function (req, res, next) {
             return next(error);
         }
         res.json(results);
+
     })
 });
+
+router.post('/responses', function(req, res, next){
+    var genId = Math.random();
+    Response.create([{
+        id: genId,
+        trigger: req.body.trigger,
+        response: req.body.response
+        }], function (error) {
+            if (error){
+                return next(error)
+            }
+            Response.find().sort('trigger').exec(function (error, results){
+                if (error){
+                    return next(error);
+                }
+                res.json(results);
+
+            })
+        }
+    )
+});
+
 router.get('/responses/:id', function (req, res){
     Response.findOne({ id: req.params.id}).exec(function (error, result){
         if (error){
             return next(error)
         }else if (!result){
-            res.send(404);
+            res.sendStatus(404);
         }else{
             res.json(result);
+
         }
 
 
@@ -32,8 +56,18 @@ router.put('/responses/:id', function (req, res, next) {
         if (error){
             return next(error)
         }
-        res.send(200)
+        res.sendStatus(200)
     });
 
+});
+router.delete('/responses/:id', function (req, res, next) {
+    Response.remove({
+        id: req.params.id
+    }).exec(function (error) {
+        if (error) {
+            return next(error)
+        }
+        res.sendStatus(200)
+    })
 });
 module.exports = router;
