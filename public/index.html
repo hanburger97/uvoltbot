@@ -8,27 +8,17 @@
 </head>
 <body>
 <h1>This is DemoBot Server</h1>
-<div ng-controller="main">
-    <input type="text" ng-model="trigger" placeholder="Trigger">
-    <textarea type="text" ng-model="response" placeholder="Response"></textarea>
-    <button ng-disabled="!(trigger.length && response.length)" ng-click="add()">Add New Response</button>
-    <table>
-        <tr ng-repeat="r in responses">
-            <td>{{r.id}}</td>
-            <td>{{r.trigger}}</td>
-            <td>{{r.response}}</td>
-            <td><button ng-click="$parent.remove(r)">Remove</button></td>
+<ng-view></ng-view>
 
-        </tr>
-    </table>
-</div>
+<a href="#/view">Click me</a>
 <div ng-controller="logger">
         <pre>
             <p ng-repeat="e in events track by $index">{{$index}} -{{e}}</p>
         </pre>
 </div>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
-<script src="//code.angularjs.org/1.2.16/angular-resource.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.js"></script>
+<script src="//code.angularjs.org/1.2.25/angular-route.js"></script>
+<script src="//code.angularjs.org/1.2.25/angular-resource.js"></script>
 <script src="./js/index.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>

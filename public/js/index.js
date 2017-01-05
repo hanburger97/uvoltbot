@@ -1,27 +1,39 @@
 
 
-var app = angular.module('app', ['ngResource']);
+var app = angular.module('app', ['ngRoute']);
 /*
 app.factory('ResponseService' ['$resource', function($resource){
     return $resource('/responses/:id', {}, {
         get: {
             isArray : true
         },
+        post:{
+            method: 'POST'
+        },
         delete: {
             isArray: true,
             method: 'DELETE'
-        },
+        }
     })
-}])
+}]);*/
+app.config(['$routeProvider', function($routeProvider){
+    $routeProvider
+        .when('/view', {
+            templateUrl: './templates/view.html',
+            controller: 'view'
+        });
+}]);
 
-*/
-app.controller('main', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
+
+app.controller('view', ['$scope', '$http', '$rootScope', function($scope,$http, $rootScope) {
     $scope.responses = [];
     $scope.trigger = $scope.response = '';
     $http.get('/responses').success(function(data) {
         $scope.responses = data;
         $rootScope.$emit('log', 'GET /responses success');
     });
+
+
     $scope.add = function () {
         $http.post('/responses', {
             trigger: $scope.trigger,
@@ -34,7 +46,8 @@ app.controller('main', ['$scope', '$http', '$rootScope', function($scope, $http,
     };
     $scope.remove = function(response) {
         $http.delete('/responses/' + response.id).success(function(data) {
-            $scope.responses = data;
+            //$scope.responses = data;
+            $scope.responses.splice(response);
             $rootScope.$emit('log', 'DELETE /responses success');
         });
     }

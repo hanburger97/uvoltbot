@@ -14,24 +14,19 @@ router.get('/responses', function (req, res, next) {
 });
 
 router.post('/responses', function(req, res, next){
-    var genId = Math.random();
-    Response.create([{
-        id: genId,
+    var newData = {
+        id: Math.random(),
         trigger: req.body.trigger,
         response: req.body.response
-        }], function (error) {
-            if (error){
-                return next(error)
-            }
-            Response.find().sort('trigger').exec(function (error, results){
-                if (error){
-                    return next(error);
-                }
-                res.json(results);
-
-            })
+    };
+    var response = new Response(newData);
+    response.save(function (err, data) {
+        if (err) {
+            return next(err);
         }
-    )
+        res.json(data)
+    });
+
 });
 
 router.get('/responses/:id', function (req, res){
@@ -63,11 +58,11 @@ router.put('/responses/:id', function (req, res, next) {
 router.delete('/responses/:id', function (req, res, next) {
     Response.remove({
         id: req.params.id
-    }).exec(function (error) {
+    }).exec(function (error, data) {
         if (error) {
             return next(error)
         }
-        res.sendStatus(200)
+        res.sendStatus(200);
     })
 });
 module.exports = router;

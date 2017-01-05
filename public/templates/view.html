@@ -1,0 +1,29 @@
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+
+            <table class="table">
+                <tr>
+                    <th>Trigger Word</th>
+                    <th>Response Object</th>
+                </tr>
+                <tr ng-repeat="r in responses">
+
+                    <td>{{r.trigger}}</td>
+                    <td>{{r.response}}</td>
+                    <td><button ng-click="$parent.remove(r)">Remove</button></td>
+
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <input type="text" ng-model="trigger" placeholder="Trigger">
+            <br>
+            <textarea type="text" ng-model="response" placeholder="Response"></textarea>
+            <br>
+            <button ng-disabled="!(trigger.length && response.length)" ng-click="add()">Add New Response</button>
+        </div>
+    </div>
+</div>
