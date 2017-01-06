@@ -71,21 +71,7 @@ router.post('/webhook', function (req, res) {
                 console.log(r);
                 callback();
             };
-            /*
-            var f1_5 = function (callback){
-                console.log(r);
-                callback();
-            };
 
-            var f2 = function(callback){
-                if (r.length < 1){
-
-
-                }
-                console.log('f2 executed');
-                console.log(r);
-                callback();
-            };*/
             async.series([
                 f1
             ], function(error){
@@ -94,47 +80,6 @@ router.post('/webhook', function (req, res) {
                 }
                 console.log('executed f1, f2')
             });
-            /*
-            for(z =0; z < words.length; z ++) {
-                no_reply = false;
-                var word = words[z];
-                Response.findOne({
-                    trigger: word
-                }).exec(function (err, data){
-                    if (err){
-                        console.log(err);
-                    }
-
-                    else if (!data) {
-                        console.log('No data');
-                        no_reply = true;
-                    }
-                    else {
-                        logic.sendMessage(event.sender.id, data.response);
-                        no_reply = false;
-                        
-                    }
-                });
-
-            };
-            if (z + 1 == words.length && no_reply){
-                logic.sendMessage(event.sender.id, {
-                    text: "Sorry, I am not programmed to understand this yet",
-                    //text: "Sorry " + currentUser.first_name + ", I am not programmed to understand this yet",
-                    quick_replies: [
-                        {
-                            content_type: "text",
-                            title: "Ok",
-                            payload: "undefined"
-                        },
-                        {
-                            content_type: "text",
-                            title: 'Nevermind',
-                            payload: "start"
-                        }
-                    ]
-                });
-            }*/
 
         } else if (event.postback){
 

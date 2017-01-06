@@ -21,11 +21,16 @@ app.config(['$routeProvider', function($routeProvider){
         .when('/view', {
             templateUrl: './templates/view.html',
             controller: 'view'
-        });
+        })
+        .when('/view/:id',{
+            templateUrl: './templates/edit.html',
+            controller: 'edit'
+
+    });
 }]);
 
 
-app.controller('view', ['$scope', '$http', '$rootScope', function($scope,$http, $rootScope) {
+app.controller('view', ['$scope', '$http', '$rootScope', '$location', function($scope,$http, $rootScope, $location) {
     $scope.responses = [];
     $scope.trigger = $scope.response = '';
     $http.get('/responses').success(function(data) {
@@ -52,7 +57,11 @@ app.controller('view', ['$scope', '$http', '$rootScope', function($scope,$http, 
             });
             $rootScope.$emit('log', 'DELETE /responses success');
         });
+    };
+    $scope.toEdit = function(response){
+        $location.url('/view/'+ response.id);
     }
+
 }]);
 
 app.controller('postbacks', ['$scope', '$http', '$rootScope', function($scope,$http, $rootScope) {
@@ -84,6 +93,27 @@ app.controller('postbacks', ['$scope', '$http', '$rootScope', function($scope,$h
             $rootScope.$emit('log', 'DELETE /responses success');
         });
     }
+}]);
+app.controller('edit', ['$scope', '$http', '$rootScope', '$routeParams', function ($scope,$http, $rootScope, $routeParams) {
+    $scope.response ={};
+    $http.get('/responses/'+$routeParams.id).success(function(data){
+        $scope.response = data;
+        $scope.trigger = data.trigger;
+        $scope.responsew = data.response;
+        $rootScope.$emit('log', 'GET /responses/:id success')
+    });
+    $scope.update = function () {
+        $http.put('/responses/'+$routeParams.id, {
+            trigger : $scope.trigger,
+            response: $scope.responsew
+        }).success(function (data) {
+            $scope.responsew = data.response;
+            $scope.trigger = data.trigger;
+            $rootScope.$emit('log', 'PUT /responses/:id success')
+        })
+    }
+
+
 }]);
 app.controller('logger', ['$scope', '$rootScope', function ($scope, $rootScope) {
     $scope.events = [];

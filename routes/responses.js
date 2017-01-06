@@ -45,20 +45,33 @@ router.get('/responses/:id', function (req, res){
 });
 router.put('/responses/:id', function (req, res, next) {
     delete req.body._id;
-    Response.update({
+    Response.findOneAndUpdate({id: req.params.id}, {
+        trigger: req.body.trigger,
+        response: req.body.response
+    }, function (err, data) {
+        if (err){
+            next(data)
+        }
+        res.json(data)
+
+    });
+    /*
+    Response.save({
         id: req.params.id
-    }, req.body, function(error){
+    }, function(error, data){
         if (error){
             return next(error)
         }
-        res.sendStatus(200)
-    });
+        res.json(data)
+    });*/
 
 });
 router.delete('/responses/:id', function (req, res, next) {
+
+
     Response.remove({
         id: req.params.id
-    }).exec(function (error, data) {
+    }).exec(function (error) {
         if (error) {
             return next(error)
         }
