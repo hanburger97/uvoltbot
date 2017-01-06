@@ -40,14 +40,47 @@ app.controller('view', ['$scope', '$http', '$rootScope', function($scope,$http, 
             response: $scope.response
         }).success(function(data) {
             $scope.responses.push(data);
-            $scope.firstName = $scope.lastName = '';
+            $scope.trigger = $scope.response = '';
             $rootScope.$emit('log', 'POST /responses success');
         });
     };
     $scope.remove = function(response) {
-        $http.delete('/responses/' + response.id).success(function(data) {
+        $http.delete('/responses/' + response.id).success(function() {
+            $http.get('/responses').success(function(data) {
+                $scope.responses = data;
+                $rootScope.$emit('log', 'GET /responses success');
+            });
+            $rootScope.$emit('log', 'DELETE /responses success');
+        });
+    }
+}]);
+
+app.controller('postbacks', ['$scope', '$http', '$rootScope', function($scope,$http, $rootScope) {
+    $scope.postbacks = [];
+    $scope.received = $scope.response = '';
+    $http.get('/postbacks').success(function(data) {
+        $scope.postbacks = data;
+        $rootScope.$emit('log', 'GET /postbacks success');
+    });
+
+
+    $scope.add = function () {
+        $http.post('/postbacks', {
+            received: $scope.received,
+            response: $scope.response
+        }).success(function(data) {
+            $scope.postbacks.push(data);
+            $scope.received = $scope.response = '';
+            $rootScope.$emit('log', 'POST /postbacks success');
+        });
+    };
+    $scope.remove = function(postback) {
+        $http.delete('/postbacks/' + postback.id).success(function() {
             //$scope.responses = data;
-            $scope.responses.splice(response);
+            //$scope.responses.splice(response);
+            $http.get('/postbacks').success(function(data) {
+                $scope.postbacks = data;
+            });
             $rootScope.$emit('log', 'DELETE /responses success');
         });
     }

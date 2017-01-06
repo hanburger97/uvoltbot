@@ -1,0 +1,22 @@
+{
+  "attachment":{
+    "type":"template",
+    "payload":{
+      "template_type":"generic",
+      "elements":[
+        {
+          "title":"Welcome to Peter\'s Hats",
+          "image_url":"https://i.imgur.com/GYuF5X8.jpg",
+          "subtitle":"We\'ve got the right hat for everyone.",
+          "buttons":[
+            {
+              "type":"postback",
+              "title":"Start Chatting",
+              "payload":"DEVELOPER_DEFINED_PAYLOAD"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -11,6 +11,22 @@ router.get('/postbacks', function (req, res, next) {
         res.json(results);
     })
 });
+router.post('/postbacks', function (req, res, next) {
+    var newData = {
+        id: Math.random(),
+        received: req.body.received,
+        response: req.body.response
+    };
+    var postback = new Postback(newData);
+    postback.save(function (err, data) {
+        if (err){
+            return next(err)
+        }
+        res.json(data)
+    });
+
+
+});
 router.get('/postbacks/:id', function (req, res){
     Postback.findOne({ id: req.params.id}).exec(function (error, result){
         if (error){
@@ -35,5 +51,16 @@ router.put('/postbacks/:id', function (req, res, next) {
         res.send(200)
     });
 
+});
+router.delete('/postbacks/:id', function (req, res, next) {
+    Postback.remove({
+        id: req.params.id
+    }).exec(function (err) {
+        if (err){
+            return next(err)
+
+        }
+        res.sendStatus(200)
+    });
 });
 module.exports = router;
