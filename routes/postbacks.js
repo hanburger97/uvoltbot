@@ -42,13 +42,15 @@ router.get('/postbacks/:id', function (req, res){
 });
 router.put('/postbacks/:id', function (req, res, next) {
     delete req.body._id;
-    Postback.update({
-        id: req.params.id
-    }, req.body, function(error){
-        if (error){
-            return next(error)
+    Postback.findOneAndUpdate({id: req.params.id}, {
+        received: req.body.received,
+        response: req.body.response
+    }, function (err, data) {
+        if (err){
+            next(data)
         }
-        res.send(200)
+        res.json(data)
+
     });
 
 });

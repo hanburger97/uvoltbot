@@ -22,10 +22,13 @@ app.config(['$routeProvider', function($routeProvider){
             templateUrl: './templates/view.html',
             controller: 'view'
         })
-        .when('/view/:id',{
+        .when('/view/response/:id',{
             templateUrl: './templates/edit.html',
-            controller: 'edit'
+            controller: 'editR'
 
+        }).when('/view/postback/:id', {
+            templateUrl: './templates/editP.html',
+            controller: 'editP'
     });
 }]);
 
@@ -59,12 +62,12 @@ app.controller('view', ['$scope', '$http', '$rootScope', '$location', function($
         });
     };
     $scope.toEdit = function(response){
-        $location.url('/view/'+ response.id);
+        $location.url('/view/response/'+ response.id);
     }
 
 }]);
 
-app.controller('postbacks', ['$scope', '$http', '$rootScope', function($scope,$http, $rootScope) {
+app.controller('postbacks', ['$scope', '$http', '$rootScope', '$location', function($scope,$http, $rootScope, $location) {
     $scope.postbacks = [];
     $scope.received = $scope.response = '';
     $http.get('/postbacks').success(function(data) {
@@ -92,9 +95,12 @@ app.controller('postbacks', ['$scope', '$http', '$rootScope', function($scope,$h
             });
             $rootScope.$emit('log', 'DELETE /responses success');
         });
+    };
+    $scope.toEdit = function (postback) {
+        $location.url('/view/postback/'+ postback.id)
     }
 }]);
-app.controller('edit', ['$scope', '$http', '$rootScope', '$routeParams', function ($scope,$http, $rootScope, $routeParams) {
+app.controller('editR', ['$scope', '$http', '$rootScope', '$routeParams', function ($scope,$http, $rootScope, $routeParams) {
     $scope.response ={};
     $http.get('/responses/'+$routeParams.id).success(function(data){
         $scope.response = data;
@@ -109,6 +115,27 @@ app.controller('edit', ['$scope', '$http', '$rootScope', '$routeParams', functio
         }).success(function (data) {
             $scope.responsew = data.response;
             $scope.trigger = data.trigger;
+            $rootScope.$emit('log', 'PUT /responses/:id success')
+        })
+    }
+
+
+}]);
+app.controller('editP', ['$scope', '$http', '$rootScope', '$routeParams', '$location', function ($scope,$http, $rootScope, $routeParams, $location) {
+    $scope.postback ={};
+    $http.get('/postbacks/'+$routeParams.id).success(function(data){
+        $scope.postback = data;
+        $scope.received = data.received;
+        $scope.response = data.response;
+        $rootScope.$emit('log', 'GET /postback/:id success')
+    });
+    $scope.update = function () {
+        $http.put('/postbacks/'+$routeParams.id, {
+            received : $scope.received,
+            response: $scope.response
+        }).success(function (data) {
+            $scope.received= $scope.response='';
+            $location.url('/view');
             $rootScope.$emit('log', 'PUT /responses/:id success')
         })
     }

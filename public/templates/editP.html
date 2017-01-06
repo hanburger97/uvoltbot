@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <p>Update Postback Word</p>
+            <input type="text" ng-model="received" >
+        </div>
+        <div class="col-md-6">
+            <p>Update Response Object</p>
+            <textarea id="editJSON" type="text" ng-model="response" placeholder=""></textarea>
+        </div>
+        <div class="col-md-12"><button ng-click="update()">Update</button></div>
+    </div>
+</div>
+<div ng-controller="logger">
+        <pre>
+            <p ng-repeat="e in events track by $index">{{$index}} -{{e}}</p>
+        </pre>
+</div>
