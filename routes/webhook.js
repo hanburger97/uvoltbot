@@ -17,7 +17,20 @@ router.post('/webhook', function (req, res) {
     var events = req.body.entry[0].messaging;
     for (i = 0; i < events.length; i++) {
         var event = events[i];
-        if (event.message && event.message.text) {
+        if (event.postback){
+
+            Postback.findOne({
+                received: event.postback.payload
+            }).exec(function (err, data) {
+                if (err){
+                    console.log(err)
+                }else if (!data){
+                    logic.sendMessage(event.sender.id, {text:"Sorry I am not programmed to handle this button yet"});
+                }else{
+                    logic.sendMessage(event.sender.id, data.response);
+                }
+            });
+        }else if (event.message && event.message.text) {
 
             event.message.text = event.message.text.toLowerCase();
             var words = event.message.text.split(' ');
@@ -81,19 +94,6 @@ router.post('/webhook', function (req, res) {
                 console.log('executed f1, f2')
             });
 
-        } else if (event.postback){
-
-            Postback.findOne({
-                received: event.postback.payload
-            }).exec(function (err, data) {
-                if (err){
-                    console.log(err)
-                }else if (!data){
-                    logic.sendMessage(event.sender.id, {text:"Sorry I am not programmed to handle this button yet"});
-                }else{
-                    logic.sendMessage(event.sender.id, data.response);
-                }
-            });
         }
     }
     res.sendStatus(200);
