@@ -35,7 +35,7 @@ app.config(['$routeProvider', function($routeProvider){
 
 app.controller('view', ['$scope', '$http', '$rootScope', '$location', function($scope,$http, $rootScope, $location) {
     $scope.responses = [];
-    $scope.trigger = $scope.response = '';
+    $scope.trigger = $scope.response = $scope.action ='';
     $http.get('/responses').success(function(data) {
         $scope.responses = data;
         $rootScope.$emit('log', 'GET /responses success');
@@ -45,10 +45,11 @@ app.controller('view', ['$scope', '$http', '$rootScope', '$location', function($
     $scope.add = function () {
         $http.post('/responses', {
             trigger: $scope.trigger,
-            response: $scope.response
+            response: $scope.response,
+            action: $scope.action
         }).success(function(data) {
             $scope.responses.push(data);
-            $scope.trigger = $scope.response = '';
+            $scope.trigger = $scope.response = $scope.action = '';
             $rootScope.$emit('log', 'POST /responses success');
         });
     };
@@ -100,21 +101,23 @@ app.controller('postbacks', ['$scope', '$http', '$rootScope', '$location', funct
         $location.url('/view/postback/'+ postback.id)
     }
 }]);
-app.controller('editR', ['$scope', '$http', '$rootScope', '$routeParams', function ($scope,$http, $rootScope, $routeParams) {
+app.controller('editR', ['$scope', '$http', '$rootScope', '$routeParams', '$location', function ($scope,$http, $rootScope, $routeParams, $location) {
     $scope.response ={};
     $http.get('/responses/'+$routeParams.id).success(function(data){
         $scope.response = data;
         $scope.trigger = data.trigger;
         $scope.responsew = data.response;
+        $scope.action = data.action;
         $rootScope.$emit('log', 'GET /responses/:id success')
     });
     $scope.update = function () {
         $http.put('/responses/'+$routeParams.id, {
             trigger : $scope.trigger,
-            response: $scope.responsew
+            response: $scope.responsew,
+            action: $scope.action
         }).success(function (data) {
-            $scope.responsew = data.response;
-            $scope.trigger = data.trigger;
+
+            $location.url('/view');
             $rootScope.$emit('log', 'PUT /responses/:id success')
         })
     }

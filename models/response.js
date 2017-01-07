@@ -14,6 +14,10 @@ var ResponseSchema = new Schema({
         type: Object,
         required: true,
 
+    },
+    action: {
+        type: String,
+        required: false
     }
 });
 module.exports = mongoose.model('Response', ResponseSchema);

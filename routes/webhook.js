@@ -6,7 +6,7 @@ var Response = mongoose.model('Response');
 var Postback = mongoose.model('Postback');
 var async = require('async');
 
-var pausedUsers = []
+var pausedUsers = [];
 
 router.get('/webhook', function (req, res) {
   if (req.query['hub.verify_token'] === 'testbot_verify_token') {
@@ -41,7 +41,11 @@ router.post('/webhook', function (req, res) {
         } else if (!data) {
           logic.sendMessage(event.sender.id, {text: "Sorry I am not programmed to handle this button yet"});
         } else {
-          logic.sendMessage(event.sender.id, data.response);
+            if (data.action && data.action == 'Timeout') {
+                var until = new Date(new Date().getTime() + 20*60000);
+                pausedUsers[event.sender.id] = until
+            }
+            logic.sendMessage(event.sender.id, data.response);
         }
       });
     } else if (event.message && event.message.text) {
@@ -88,8 +92,8 @@ router.post('/webhook', function (req, res) {
               }
             }
             else {
-              var jsonData = JSON.parse(data.response);
-              if (jsonData.action && jsonData.action.pause) {
+              //var jsonData = JSON.parse(data.response);
+              if (data.action && data.action == 'Timeout') {
                 var until = new Date(new Date().getTime() + 20*60000);
                 pausedUsers[event.sender.id] = until
               }
