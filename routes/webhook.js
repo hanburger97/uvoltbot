@@ -29,7 +29,8 @@ router.post('/webhook', function (req, res) {
                 }else{
                     logic.sendMessage(event.sender.id, data.response);
                 }
-            });
+            }
+            );
         }else if (event.message && event.message.text) {
 
             event.message.text = event.message.text.toLowerCase();
