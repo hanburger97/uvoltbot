@@ -15,10 +15,10 @@ app.listen((process.env.PORT || 3000));
 
 //app.use(testdb);
 // Server frontpage
-/*
+
 app.get('/', function (req, res) {
     res.send('This is TestBot Server');
-});*/
+});
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(webhook);
 app.use(responses);

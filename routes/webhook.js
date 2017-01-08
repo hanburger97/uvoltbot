@@ -20,6 +20,9 @@ router.post('/webhook', function (req, res) {
 
   for (i = 0; i < events.length; i++) {
 
+
+
+
     var event = events[i];
 
     if (pausedUsers[event.sender.id] && pausedUsers[event.sender.id] > new Date()) {
