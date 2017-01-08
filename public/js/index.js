@@ -80,10 +80,11 @@ app.controller('postbacks', ['$scope', '$http', '$rootScope', '$location', funct
     $scope.add = function () {
         $http.post('/postbacks', {
             received: $scope.received,
-            response: $scope.response
+            response: $scope.response,
+            action: $scope.action
         }).success(function(data) {
             $scope.postbacks.push(data);
-            $scope.received = $scope.response = '';
+            $scope.received = $scope.response = $scope.action = '';
             $rootScope.$emit('log', 'POST /postbacks success');
         });
     };
@@ -107,14 +108,18 @@ app.controller('editR', ['$scope', '$http', '$rootScope', '$routeParams', '$loca
         $scope.response = data;
         $scope.trigger = data.trigger;
         $scope.responsew = data.response;
-        $scope.action = data.action;
+        $scope.operation = data.action.operation;
+        $scope.value = data.action.value;
         $rootScope.$emit('log', 'GET /responses/:id success')
     });
     $scope.update = function () {
         $http.put('/responses/'+$routeParams.id, {
             trigger : $scope.trigger,
             response: $scope.responsew,
-            action: $scope.action
+            action: {
+                operation: $scope.operation,
+                value: $scope.value
+            }
         }).success(function (data) {
 
             $location.url('/view');

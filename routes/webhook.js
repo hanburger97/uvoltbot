@@ -20,7 +20,7 @@ router.post('/webhook', function (req, res) {
 
   for (i = 0; i < events.length; i++) {
     var event = events[i];
-
+    /*** TIMEOUT SECTION **/
     if (pausedUsers[event.sender.id] && pausedUsers[event.sender.id] > new Date()) {
       // skiped
       //logic.sendMessage(event.sender.id, {text: "DEBUG: PAUSED until " + pausedUsers[event.sender.id].toString()});
@@ -76,8 +76,8 @@ router.post('/webhook', function (req, res) {
             }
             else {
               //var jsonData = JSON.parse(data.response);
-              if (data.action && data.action == 'Timeout') {
-                var until = new Date(new Date().getTime() + 1*60000);
+              if (data.action && data.action.operation == 'Timeout') {
+                var until = new Date(new Date().getTime() + (data.action.value * 1000));
                 pausedUsers[event.sender.id] = until
               }
               logic.sendMessage(event.sender.id, data.response);
@@ -110,8 +110,8 @@ router.post('/webhook', function (req, res) {
               } else if (!data) {
                   logic.sendMessage(event.sender.id, {text: "Sorry I am not programmed to handle this button yet"});
               } else {
-                  if (data.action && data.action == 'Timeout') {
-                      var until = new Date(new Date().getTime() + 20*60000);
+                  if (data.action && data.action.operation == 'Timeout') {
+                      var until = new Date(new Date().getTime() + (data.action.value * 1000));
                       pausedUsers[event.sender.id] = until
                   }
                   logic.sendMessage(event.sender.id, data.response);

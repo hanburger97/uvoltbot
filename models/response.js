@@ -16,8 +16,12 @@ var ResponseSchema = new Schema({
 
     },
     action: {
-        type: String,
-        required: false
+        operation : {
+            type: String
+        },
+        value : {
+            type: Number
+        }
     }
 });
 module.exports = mongoose.model('Response', ResponseSchema);
