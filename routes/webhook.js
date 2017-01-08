@@ -6,7 +6,7 @@ var Response = mongoose.model('Response');
 var Postback = mongoose.model('Postback');
 var async = require('async');
 
-//var pausedUsers = [];
+var pausedUsers = [];
 
 router.get('/webhook', function (req, res) {
   if (req.query['hub.verify_token'] === 'testbot_verify_token') {
@@ -20,7 +20,7 @@ router.post('/webhook', function (req, res) {
 
   for (i = 0; i < events.length; i++) {
     var event = events[i];
-    /*
+
     if (pausedUsers[event.sender.id] && pausedUsers[event.sender.id] > new Date()) {
       // skiped
       logic.sendMessage(event.sender.id, {text: "DEBUG: PAUSED until " + pausedUsers[event.sender.id].toString()});
@@ -28,7 +28,7 @@ router.post('/webhook', function (req, res) {
     } else {
       // Expired. Remove pause
       delete pausedUsers[event.sender.id]
-    }*/
+    }
 
     if (event.message && event.message.text) {
       event.message.text = event.message.text.toLowerCase();
@@ -75,10 +75,10 @@ router.post('/webhook', function (req, res) {
             }
             else {
               //var jsonData = JSON.parse(data.response);
-              /*if (data.action && data.action == 'Timeout') {
+              if (data.action && data.action == 'Timeout') {
                 var until = new Date(new Date().getTime() + 20*60000);
                 pausedUsers[event.sender.id] = until
-              }*/
+              }
               logic.sendMessage(event.sender.id, data.response);
 
 
