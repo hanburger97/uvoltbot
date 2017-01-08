@@ -15,7 +15,8 @@ router.post('/postbacks', function (req, res, next) {
     var newData = {
         id: Math.random(),
         received: req.body.received,
-        response: req.body.response
+        response: req.body.response,
+        action: req.body.action
     };
     var postback = new Postback(newData);
     postback.save(function (err, data) {
@@ -44,7 +45,8 @@ router.put('/postbacks/:id', function (req, res, next) {
     delete req.body._id;
     Postback.findOneAndUpdate({id: req.params.id}, {
         received: req.body.received,
-        response: req.body.response
+        response: req.body.response,
+        action:req.body.action
     }, function (err, data) {
         if (err){
             next(data)

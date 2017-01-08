@@ -8,20 +8,21 @@
                 <tr>
                     <th>Triggering Word</th>
                     <th>Response Object</th>
+                    <th>Action</th>
                 </tr>
                 <tr>
                     <td><input type="text" ng-model="trigger" placeholder="Trigger"></td>
                     <td><textarea type="text" ng-model="response" placeholder="Response"></textarea></td>
-                    <td><input type="text" ng-model="action"></td>
-                    <td><button ng-disabled="!(trigger.length && response.length)" ng-click="add()">Add </button></td>
+                    <td><p><span style="font-style: italic">To add Action go in Edit after creating Response</span></p><!--<input type="text" ng-model="action">--></td>
+                    <td><button class="btn" ng-disabled="!(trigger.length && response.length)" ng-click="add()">Add </button></td>
                 </tr>
                 <tr ng-repeat="r in responses">
 
                     <td>{{r.trigger}}</td>
                     <td>{{r.response}}</td>
                     <td>{{r.action}}</td>
-                    <td><button ng-click="$parent.remove(r)">Remove</button></td>
-                    <td><button ng-click="$parent.toEdit(r)">Edit</button></td>
+                    <td><button class="btn" ng-click="$parent.remove(r)">Remove</button></td>
+                    <td><button class="btn" ng-click="$parent.toEdit(r)">Edit</button></td>
 
                 </tr>
 
@@ -40,18 +41,21 @@
                 <tr>
                     <th>Received Word</th>
                     <th>Response Object</th>
+                    <th>Action</th>
                 </tr>
                 <tr>
                     <td><input type="text" ng-model="received" placeholder="Received"></td>
                     <td><textarea type="text" ng-model="response" placeholder="Response"></textarea></td>
-                    <td><button ng-disabled="!(received.length && response.length)" ng-click="add()">Add</button></td>
+                    <td><p><span style="font-style: italic">To add Action go in Edit after creating Response</span></p><!--<input type="text" ng-model="action">--></td>
+                    <td><button class="btn" ng-disabled="!(received.length && response.length)" ng-click="add()">Add</button></td>
                 </tr>
                 <tr ng-repeat="p in postbacks">
 
                     <td>{{p.received}}</td>
                     <td>{{p.response}}</td>
-                    <td><button ng-click="$parent.remove(p)">Remove</button></td>
-                    <td><button ng-click="$parent.toEdit(p)">Edit</button></td>
+                    <td>{{p.action}}</td>
+                    <td><button class="btn" ng-click="$parent.remove(p)">Remove</button></td>
+                    <td><button class="btn" ng-click="$parent.toEdit(p)">Edit</button></td>
 
                 </tr>
             </table>

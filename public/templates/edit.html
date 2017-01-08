@@ -9,16 +9,16 @@
             <textarea id="editJSON" type="text" ng-model="responsew" placeholder=""></textarea>
         </div>
         <div class="col-md-2">
-            <p>Action</p>
+            <p>Operation</p>
             <input type="text" ng-model="operation">
             <p>Enter the operation: (e.g Timeout)</p>
         </div>
         <div class="col-md-1">
-            <p>Action</p>
+            <p>Value (in seconds)</p>
             <input type="text" ng-model="value">
-            <p>Enter the value: (in minutes)</p>
+
         </div>
-        <div class="col-md-12"><button ng-click="update()">Update</button></div>
+        <div class="col-md-12"><button class="btn" ng-click="update()">Update</button></div>
     </div>
 </div>
 <div ng-controller="logger">

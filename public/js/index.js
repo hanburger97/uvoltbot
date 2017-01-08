@@ -46,7 +46,7 @@ app.controller('view', ['$scope', '$http', '$rootScope', '$location', function($
         $http.post('/responses', {
             trigger: $scope.trigger,
             response: $scope.response,
-            action: $scope.action
+            action: {}
         }).success(function(data) {
             $scope.responses.push(data);
             $scope.trigger = $scope.response = $scope.action = '';
@@ -70,7 +70,7 @@ app.controller('view', ['$scope', '$http', '$rootScope', '$location', function($
 
 app.controller('postbacks', ['$scope', '$http', '$rootScope', '$location', function($scope,$http, $rootScope, $location) {
     $scope.postbacks = [];
-    $scope.received = $scope.response = '';
+    $scope.received = $scope.response = $scope.action='';
     $http.get('/postbacks').success(function(data) {
         $scope.postbacks = data;
         $rootScope.$emit('log', 'GET /postbacks success');
@@ -81,7 +81,7 @@ app.controller('postbacks', ['$scope', '$http', '$rootScope', '$location', funct
         $http.post('/postbacks', {
             received: $scope.received,
             response: $scope.response,
-            action: $scope.action
+            action: {}
         }).success(function(data) {
             $scope.postbacks.push(data);
             $scope.received = $scope.response = $scope.action = '';
@@ -135,14 +135,20 @@ app.controller('editP', ['$scope', '$http', '$rootScope', '$routeParams', '$loca
         $scope.postback = data;
         $scope.received = data.received;
         $scope.response = data.response;
+        $scope.operation = data.action.operation;
+        $scope.value = data.action.value;
         $rootScope.$emit('log', 'GET /postback/:id success')
     });
     $scope.update = function () {
         $http.put('/postbacks/'+$routeParams.id, {
             received : $scope.received,
-            response: $scope.response
+            response: $scope.response,
+            action: {
+                operation: $scope.operation,
+                value: $scope.value
+            }
         }).success(function (data) {
-            $scope.received= $scope.response='';
+            $scope.received= $scope.response=$scope.operation= $scope.value='';
             $location.url('/view');
             $rootScope.$emit('log', 'PUT /responses/:id success')
         })
