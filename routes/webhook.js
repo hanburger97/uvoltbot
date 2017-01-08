@@ -23,7 +23,7 @@ router.post('/webhook', function (req, res) {
 
     if (pausedUsers[event.sender.id] && pausedUsers[event.sender.id] > new Date()) {
       // skiped
-      logic.sendMessage(event.sender.id, {text: "DEBUG: PAUSED until " + pausedUsers[event.sender.id].toString()});
+      //logic.sendMessage(event.sender.id, {text: "DEBUG: PAUSED until " + pausedUsers[event.sender.id].toString()});
       break
     } else {
       // Expired. Remove pause
