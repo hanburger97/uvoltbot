@@ -29,7 +29,11 @@ app.config(['$routeProvider', function($routeProvider){
         }).when('/view/postback/:id', {
             templateUrl: './templates/editP.html',
             controller: 'editP'
-    });
+        }).when('/view/postback/:id/buttons', {
+            templateUrl: './templates/pButton.html',
+            controller: 'pButton'
+    })
+    ;
 }]);
 
 
@@ -156,6 +160,58 @@ app.controller('editP', ['$scope', '$http', '$rootScope', '$routeParams', '$loca
 
 
 }]);
+
+
+app.controller('pButton', ['$scope', '$rootScope', '$http', '$location', 'routeParams', function ($scope, $rootScope, $http, $location, $routeParams) {
+    $scope.buttons = [];
+    $scope.title = $scope.subtitle = $scope.img ='';
+    //$scope.btnText = $scope.text = $scope.payload;
+    //$scope.postback = {};
+    $http.get('/postbacks/'+$routeParams.id).success(function(data){
+        $scope.buttons = data.attachment.payload.elements.buttons;
+        $scope.title = data.attachment.payload.elements.title;
+        $scope.subtitle = data.attachment.payload.elements.subtitle;
+        $scope.img = data.attachment.payload.elements.image_url;
+
+    });
+    $scope.addBtn = function () {
+        var button = {
+            type: $scope.btnType,
+            title: $scope.btnTitle,
+            payload: $scope.btnPayload
+        };
+        buttons.push(button);
+
+    };
+    $scope.update = function () {
+        $http.put('/postbacks'+$routeParams.id, {
+            response : {
+                attachment : {
+                    type: 'template',
+                    payload : {
+                        template_type: 'generic',
+                        elements : [
+                            {
+                                title : $scope.title,
+                                image_url : $scope.img,
+                                subtitle : $scope.subtitle,
+                                buttons : $scope.buttons
+                            }
+                        ]
+                    }
+
+                }
+            }
+
+        }).success(function () {
+            $rootScope.$emit('log', 'PUT /responses/:id btns updated')
+        })
+    }
+
+
+}]);
+
+
 app.controller('logger', ['$scope', '$rootScope', function ($scope, $rootScope) {
     $scope.events = [];
     $rootScope.$on('log', function (event, data) {
